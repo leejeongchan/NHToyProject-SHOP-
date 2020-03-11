@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>상품 등록</title>
+    <title>상품 재판매</title>
   
     <!-- https://fonts.google.com/specimen/Roboto -->
     <link rel="stylesheet" href="../css/fontawesome.min.css" />
@@ -21,6 +21,14 @@
   </head>
 
   <body>
+  <%
+  	int gdsNum = Integer.parseInt(request.getParameter("gdsNum"));
+  	int gdsStock = Integer.parseInt(request.getParameter("gdsStock"));
+  	String gdsEndDate = (String)request.getParameter("gdsEndDate");
+  	pageContext.setAttribute("gdsNum", gdsNum);
+  	pageContext.setAttribute("gdsStock", gdsStock);
+  	pageContext.setAttribute("gdsEndDate", gdsEndDate);
+  %>
     <nav class="navbar navbar-expand-xl">
       <div class="container h-100">
         <a class="navbar-brand" href="../view/admin.jsp">
@@ -88,59 +96,26 @@
               </div>
             </div>
             <div class="row tm-edit-product-row">
-           <form action="../controller/goodswriteController.jsp" class="tm-edit-product-form" method="post" autocomplete="off" enctype="multipart/form-data">
-            
+           <form action="../controller/goodsReSellController.jsp" class="tm-edit-product-form" method="post" autocomplete="off">
+              <input type="hidden" name="gdsNum" value="${gdsNum }"/>
               <div class=" col-md-12">
-                 
-                  <div class="form-group mb-3">
-                    <label for="name">상품명</label>
-                    <input id="name" name="gdsName" type="text" class="form-control validate"  required/>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label for="description">상품설명</label>
-                    <textarea class="form-control validate" rows="3" required name="gdsDes"></textarea>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label for="category">카테고리</label >
-                    <select class="custom-select tm-select-accounts" id="category"  name="cateCode">
-							<option value="1">상의</option>
-							<option value="2">하의</option>
-							<option value="3">자켓</option>
-							<option value="4">악세서리</option>
-							<option value="5">신발</option>
-					</select>
-                  </div>
                   <div class="row">
-                      <div class="form-group mb-3 col-xs-12 col-sm-6">
-                          <label for="expire_date">상품가격</label>
-                          <input id="gdsPrice" name="gdsPrice" type="text" class="form-control validate" data-large-mode="true"/>
-                        </div>
+                      
                         <div class="form-group mb-3 col-xs-12 col-sm-6">
-                          <label for="stock">상품수량</label>
-                          <input id="stock"  name="gdsStock" type="text" class="form-control validate" required />
+                          <label for="stock">상품수량 갱신</label>
+                          <input id="stock" name="gdsStock" type="text" class="form-control validate" value="${gdsStock}" required />
                         </div>
-                         <div class="form-group mb-3 col-xs-12 col-sm-6">
-                           <label  for="expire_date">출시일</label>
-                          <input id="expire_date" name="gdsStartDate" type="text" class="form-control validate" data-large-mode="true" />
-                        </div>
+                       
                         <div class="form-group mb-3 col-xs-12 col-sm-6">
-                          <label  for="expire_date">만료일</label>
-                          <input id="expire_date2" name="gdsEndDate" type="text" class="form-control validate" data-large-mode="true" />
+                          <label  for="expire_date">만료일 갱신</label>
+                          <input id="expire_date" name="gdsEndDate" type="text" class="form-control validate" value="${gdsEndDate}" data-large-mode="true" />
                         </div>
                   </div>
                   
               </div>
-              <div class=" col-md-12 mb-4">
-                <div class="tm-product-img-dummy" id="preview" style="width:200px; height:100px;" >
-                  
-                </div> 
-                <div class="custom-file mt-3 mb-3">
-					<input type="file" name="gdsImg" id="upload">  
-					
-                </div>
-              </div>
+              
               <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block text-uppercase">상품등록</button>
+                <button type="submit" class="btn btn-primary btn-block text-uppercase">재판매</button>
               </div>
             </form>
             
@@ -171,49 +146,12 @@
     <!-- https://getbootstrap.com/ -->
     
   </body>
- <!-- 미리보기 -->
+
 <script>
-    var upload = document.querySelector('#upload');
-    var preview = document.querySelector('#preview');
- 
-    upload.addEventListener('change',function (e) {
-        var get_file = e.target.files;
- 
-        var image = document.createElement('img');
-        image.setAttribute("width","200");
-        image.setAttribute("height","100");
- 
-        /* FileReader 객체 생성 */
-        var reader = new FileReader();
- 
-        /* reader 시작시 함수 구현 */
-        reader.onload = (function (aImg) {
-            console.log(1);
- 
-            return function (e) {
-                console.log(3);
-                /* base64 인코딩 된 스트링 데이터 */
-                aImg.src = e.target.result
-            }
-        })(image)
- 
-        if(get_file){
-            /* 
-                get_file[0] 을 읽어서 read 행위가 종료되면 loadend 이벤트가 트리거 되고 
-                onload 에 설정했던 return 으로 넘어간다.
-                이와 함게 base64 인코딩 된 스트링 데이터가 result 속성에 담겨진다.
-            */
-            reader.readAsDataURL(get_file[0]);
-            console.log(2);
-        }
- 
-        preview.appendChild(image);
-    })
+
     
     $(function() {
         $("#expire_date").datepicker();
-        $("#expire_date2").datepicker();
-
      });
   
 </script>

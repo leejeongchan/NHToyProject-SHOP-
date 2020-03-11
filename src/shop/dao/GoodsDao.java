@@ -18,13 +18,17 @@ public class GoodsDao {
 		return goodsDao;
 	}
 
-	// 테이블에 상품 정보 삽입.
+	// 테이블에 상품 정보 삽입. + 상품수량 코드 테이블에도 넣어주기
 	public void write(GoodsVO goods) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		ResultSet rs = null;
+		int gdsNum = 0;
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("insert into goods values(?,?,?,?,?,?,?,now(),?,?)");
+			pstmt = conn.prepareStatement("insert into goods values(?,?,?,?,?,?,?,now(),?,?,?,?,?)");
 			pstmt.setInt(1, 0);
 			pstmt.setString(2, goods.getGdsName());
 			pstmt.setInt(3, goods.getCateCode());
@@ -34,12 +38,40 @@ public class GoodsDao {
 			pstmt.setString(7, goods.getGdsImg());
 			pstmt.setInt(8, goods.getGdsHit());
 			pstmt.setInt(9, goods.getGdsReplyCnt());
+			pstmt.setString(10, goods.getGdsStartDate());
+			pstmt.setString(11, goods.getGdsEndDate());
+			pstmt.setInt(12, goods.getGdsEndFlag());
 			pstmt.executeUpdate();
+			
+			//상품수량 코드 테이블에 넣어주기 위해서 위에서 넣어준 gdsNum을 가져온다.
+			pstmt2 = conn.prepareStatement("select gdsNum from `goods` where gdsName = ?");
+			pstmt2.setString(1, goods.getGdsName());
+			rs = pstmt2.executeQuery();
+			if(rs.next()) {
+				gdsNum = rs.getInt("gdsNum");
+			}
+			
+			//상품수량 테이블에 넣어주기
+			pstmt3 = conn.prepareStatement("insert into `goodsStock` values(?,?)");
+			pstmt3.setInt(1, gdsNum);
+			pstmt3.setInt(2, goods.getGdsStock());
+			pstmt3.executeUpdate();
+			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
+			}
+			if(pstmt2 !=null) {
+				pstmt2.close();
+			}
+			if(pstmt3 !=null) {
+				pstmt3.close();
+			}
+			if(rs!=null) {
+				rs.close();
 			}
 			if (conn != null) {
 				conn.close();
@@ -157,7 +189,9 @@ public class GoodsDao {
 		goodsVO.setGdsReg(rs.getString("gdsReg"));
 		goodsVO.setGdsHit(rs.getInt("gdsHit"));
 		goodsVO.setGdsReplyCnt(rs.getInt("gdsReplyCnt"));
-		
+		goodsVO.setGdsStartDate(rs.getString("gdsStartDate"));
+		goodsVO.setGdsEndDate(rs.getString("gdsEndDate"));
+		goodsVO.setGdsEndFlag(rs.getInt("gdsEndFlag"));
 
 		return goodsVO;
 	}
@@ -265,12 +299,31 @@ public class GoodsDao {
 		}
 		return count;
 	}
-	//관리자가 상품 삭제
+	//관리자가 상품 삭제 ==> 댓글 먼저 삭제해주기, 장바구니도 삭제해주기, 상품수량 테이블도 삭제 해주기
 	public void deleteGoods(int gdsNum) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
 		try {
 			conn = ConnectionProvider.getConnection();
+			//상품 댓글 삭제
+			pstmt2 = conn.prepareStatement("delete from `goodsReply` where gdsNum = ?");
+			pstmt2.setInt(1, gdsNum);
+			pstmt2.executeUpdate();
+			
+			//장바구니 삭제
+			pstmt3 = conn.prepareStatement("delete from `cart` where gdsNum = ?");
+			pstmt3.setInt(1, gdsNum);
+			pstmt3.executeUpdate();
+			
+			//상품수량 테이블도 삭제 해주기
+			pstmt4 = conn.prepareStatement("delete from `goodsStock` where gdsNum = ?");
+			pstmt4.setInt(1, gdsNum);
+			pstmt4.executeUpdate();
+			
+			//해당 상품 삭제
 			pstmt =conn.prepareStatement("delete from goods where gdsNum = ?");
 			pstmt.setInt(1, gdsNum);
 			pstmt.executeUpdate();
@@ -282,11 +335,83 @@ public class GoodsDao {
 				pstmt.close();
 				
 			}
+			if(pstmt2!=null) {
+				pstmt2.close();
+				
+			}
+			if(pstmt3!=null) {
+				pstmt3.close();
+				
+			}
+			if(pstmt4!=null) {
+				pstmt4.close();
+				
+			}
+			
 		
 			if(conn!=null) {
 				conn.close();
 			}
 		}
 		
+	}
+	//종료 플래그 설정
+	public void endFlag(int gdsNum,int flag) throws SQLException{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		System.out.println("gdsNum: "+gdsNum + "flag: "+flag );
+	
+		try {
+			conn = ConnectionProvider.getConnection();
+			pstmt =conn.prepareStatement("update goods set gdsEndFlag = ? where gdsNum = ?");
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, gdsNum);
+			pstmt.executeUpdate();
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt!=null) {
+				pstmt.close();
+				
+			}
+			if(conn!=null) {
+				conn.close();
+			}
+		}
+	}
+	//재판매 갱신
+	public void resellGoods(int gdsNum, int gdsStock, String gdsEndDate) throws SQLException {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement("update `goods` set gdsStock = ?, gdsEndDate = ?,gdsEndFlag = 0 where gdsNum = ?");
+			pstmt.setInt(1, gdsStock);
+			pstmt.setString(2, gdsEndDate);
+			pstmt.setInt(3, gdsNum);
+			pstmt.executeUpdate();
+			//상품수량 테이블에서도 갱신
+			pstmt2 = conn.prepareStatement("update `goodsStock` set gdsStock = ? where gdsNum = ?");
+			pstmt2.setInt(1, gdsStock);
+			pstmt2.setInt(2, gdsNum);
+			pstmt2.executeUpdate();
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt!=null) {
+				pstmt.close();
+				
+			}
+			if(conn!=null) {
+				conn.close();
+			}
+		}
 	}
 }

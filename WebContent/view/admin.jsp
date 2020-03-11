@@ -105,9 +105,12 @@
                                     <th scope="col">카테고리</th>
                                     <th scope="col">상품가격</th>
                                     <th scope="col">상품설명</th>
-                                    <th scope="col">추천수</th>
-                                    <th scope="col">댓글수</th>
+                                    
+                                    <th scope="col">출시일</th>
+                                    <th scope="col">마감일</th>
+                                    <th scope="col">출시상태</th>
                                     <th scope="col">삭제</th>
+                                    <th scope="col">재판매</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,11 +126,25 @@
                                     </b></td>
                                     <td><b>${listAll.gdsPrice }</b></td>
                                     <td>${listAll.gdsDes }</td>
-                                    <td>${listAll.gdsHit }</td>
-                                    <td>${listAll.gdsReplyCnt }</td>
+                                    <td>${listAll.gdsStartDate }</td>
+                                    <td>${listAll.gdsEndDate }</td>
+                                    <td>
+                                    	<c:if test="${listAll.gdsEndFlag eq 0 }"><p style="color:blue;">출시중</p></c:if>
+                                    	<c:if test="${listAll.gdsEndFlag eq 1 }"><p style="color:red;">출시종료</p></c:if>
+                                    	<c:if test="${listAll.gdsEndFlag eq 2 }"><p style="color:#000000;">출시전</p></c:if>
+                                    </td>
                                     <td><button type="button" class="delete_${listAll.gdsNum}_btn"
 											data-gdsNum="${listAll.gdsNum}">삭제</button></td>
+									<c:url var="url" value="../admin/bootReSell.jsp">
+										<c:param name="gdsNum" value="${listAll.gdsNum}" />
+										<c:param name="gdsEndDate" value="${listAll.gdsEndDate }"/>
+										<c:param name="gdsStock" value="${listAll.gdsStock }"/>
+		
+									</c:url>
+									<c:if test="${listAll.gdsEndFlag eq 1 }">
+										<td><a href="${url }" class="btn btn-info btn-sm">재판매</a></td>
 									
+									</c:if>
                                 </tr>
                                 <script>
 											$(".delete_${listAll.gdsNum}_btn").click(function() {

@@ -140,6 +140,10 @@
 										function addCart() {
 											var gdsNum = $(".Num").val();
 											var cartStock = $(".numBox").val();
+											if(cartStock == 0){
+												alert("재고가 부족합니다!");
+												return;
+											}
 
 											var data = {
 												gdsNum : gdsNum,

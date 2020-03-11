@@ -65,7 +65,17 @@ public class GoodsService {
 	public void deleteGoods(int gdsNum) throws Exception{
 		GoodsDao.getInstance().deleteGoods(gdsNum);
 	}
-	
-
-	
+	/*
+	 * 상품 종료 플래그 설정(마감 시)
+	 */
+	public void endFlag(int gdsNum,int flag) throws Exception{
+		GoodsDao.getInstance().endFlag(gdsNum,flag);
+	}
+	/*
+	 * 재판매를 위한 업데이트
+	 * 
+	 */
+	public void resellGoods(int gdsNum,int gdsStock,String gdsEndDate) throws Exception{
+		GoodsDao.getInstance().resellGoods(gdsNum,gdsStock,gdsEndDate);
+	}
 }

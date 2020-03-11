@@ -11,6 +11,31 @@ public class GoodsVO {
 	private String gdsReg;
 	private int gdsHit;
 	private int gdsReplyCnt;
+	
+	//추가
+	private String gdsStartDate;
+	private String gdsEndDate;
+	private int gdsEndFlag;
+	
+	
+	public String getGdsStartDate() {
+		return gdsStartDate;
+	}
+	public void setGdsStartDate(String gdsStartDate) {
+		this.gdsStartDate = gdsStartDate;
+	}
+	public String getGdsEndDate() {
+		return gdsEndDate;
+	}
+	public void setGdsEndDate(String gdsEndDate) {
+		this.gdsEndDate = gdsEndDate;
+	}
+	public int getGdsEndFlag() {
+		return gdsEndFlag;
+	}
+	public void setGdsEndFlag(int gdsEndFlag) {
+		this.gdsEndFlag = gdsEndFlag;
+	}
 	public int getGdsNum() {
 		return gdsNum;
 	}

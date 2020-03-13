@@ -74,6 +74,11 @@
                               	  주문 관리
                             </a>
                         </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="../admin/bootGraph.jsp">
+                              	  그래프
+                            </a>
+                        </li>
                       
                     </ul>
           <ul class="navbar-nav">

@@ -81,7 +81,7 @@ public class GoodsDao {
 	}
 
 	// 상품 목록 전체 리스트
-	public List<GoodsVO> listAll() throws SQLException {
+	public List<GoodsVO> listAll(int startNo, int endNo) throws SQLException {
 		GoodsVO goodsVO = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -89,7 +89,9 @@ public class GoodsDao {
 		ResultSet rs = null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("select * from goods");
+			pstmt = conn.prepareStatement("select * from goods order by gdsNum desc limit ?,?");
+			pstmt.setInt(1, startNo-1);
+			pstmt.setInt(2, endNo-startNo+1);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				list = new ArrayList<>();
@@ -196,7 +198,7 @@ public class GoodsDao {
 		return goodsVO;
 	}
 	//카테고리 별 목록 가져오기 
-	public List<GoodsVO> listCate(int cateCode) throws SQLException {
+	public List<GoodsVO> listCate(int cateCode,int startNo, int endNo) throws SQLException {
 		GoodsVO goodsVO = null;
 		List<GoodsVO> listCate = null;
 		Connection conn = null;
@@ -204,8 +206,11 @@ public class GoodsDao {
 		ResultSet rs =null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("select * from goods where cateCode = ?");
+			System.out.println("listCateCateCode: "+cateCode);
+			pstmt = conn.prepareStatement("select * from goods where cateCode = ? order by gdsNum desc limit ?,?");
 			pstmt.setInt(1, cateCode);
+			pstmt.setInt(2, startNo-1);
+			pstmt.setInt(3, endNo-startNo+1);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				listCate = new ArrayList<>();
@@ -413,5 +418,64 @@ public class GoodsDao {
 				conn.close();
 			}
 		}
+	}
+
+	public int getCount() throws SQLException {
+		int cnt = 0;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement("select count(*) from `goods`");
+			rs = pstmt.executeQuery();
+			rs.next();
+			cnt = rs.getInt(1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt!= null) {
+				pstmt.close();
+			}
+			if(rs!=null) {
+				rs.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}
+		}
+		
+		return cnt;
+	}
+
+	public int getCountCate(int cateCode) throws SQLException{
+		int cnt = 0;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement("select count(*) from `goods` where cateCode = ?");
+			pstmt.setInt(1, cateCode);
+			rs = pstmt.executeQuery();
+			rs.next();
+			cnt = rs.getInt(1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt!= null) {
+				pstmt.close();
+			}
+			if(rs!=null) {
+				rs.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}
+		}
+		
+		return cnt;
 	}
 }

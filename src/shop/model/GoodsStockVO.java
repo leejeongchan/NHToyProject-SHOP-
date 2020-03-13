@@ -3,7 +3,10 @@ package shop.model;
 public class GoodsStockVO {
 	private int gdsNum;
 	private int gdsStock;
-	
+	public GoodsStockVO(int gdsNum,int gdsStock) {
+		this.gdsNum = gdsNum;
+		this.gdsStock = gdsStock;
+	}
 	public int getGdsNum() {
 		return gdsNum;
 	}

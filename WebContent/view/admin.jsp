@@ -4,7 +4,8 @@
 <%@ page import="shop.model.GoodsVO" %>
 <%@ page import="java.util.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page import="shop.model.PageList" %>
+<%@ include file="bbsInclude.jspf" %>
 <!DOCTYPE html>
 <html>
 
@@ -25,8 +26,8 @@
 </head>
 <%
 	GoodsService goodsService = GoodsService.getInstance();
-	List<GoodsVO> listAll = goodsService.listAll();
-	pageContext.setAttribute("listAll", listAll);
+	PageList listAll = goodsService.listAll(currentPage,pageSize,blockSize);
+	pageContext.setAttribute("page", listAll);
 	
 %>
 <body id="reportsPage">
@@ -66,6 +67,11 @@
                          <li class="nav-item">
                             <a class="nav-link" href="../controller/orderListController.jsp">
                               	  주문 관리
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../admin/bootGraph.jsp">
+                              	  그래프
                             </a>
                         </li>
                       
@@ -114,7 +120,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach var="listAll" items="${listAll}">
+                            	<c:forEach var="listAll" items="${page.list}">
                             	<tr>
                                     <th scope="row"><b>${listAll.gdsName }</b></th>
                                     <td><b>
@@ -182,6 +188,54 @@
                     </div>
                 </div>
             </div>
+            <div id="paginationBox" class="mb-3">
+				<ul class="pagination">
+					<c:if test="${! page.isEmpty() }">
+						<!-- 게시판개수가 0이 아니라면 -->
+
+
+
+						<c:if test="${page.startPage > 1}">
+							<!-- 시작페이지가 1이상 즉 11 21 31 .... -->
+							<c:url var="url" value="../view/admin.jsp">
+								<c:param name="currentPage" value="${page.startPage-1}" />
+								<c:param name="pageSize" value="${page.pageSize }" />
+								<c:param name="blockSize" value="${page.blockSize }" />
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${url }">이전</a>
+						</c:if>
+						<c:forEach var="i" begin="${page.startPage }"
+							end="${page.endPage }">
+							<%-- 현재 페이지는 링크가 생기지 않게 한다. --%>
+							<li class="page-item active"><c:if
+									test="${i eq page.currentPage }">
+									<a class="page-link" href="#">${i}</a>
+								</c:if></li>
+
+							<%-- 그 외 페이지는 다시 리턴 하면서 호출 --%>
+							<li class="page-item"><c:if test="${i ne page.currentPage }">
+
+									<c:url var="url" value="../view/admin.jsp">
+										<c:param name="currentPage" value="${i}" />
+										<c:param name="pageSize" value="${page.pageSize }" />
+										<c:param name="blockSize" value="${page.blockSize }" />
+									</c:url>
+									<a class="page-link" href="${url }">${i }</a>
+
+								</c:if></li>
+						</c:forEach>
+						<%-- 마지막 페이지 번호가 전체페이지 수보다 적다면 다음 페이지가 존재한다. --%>
+
+						<c:if test="${page.endPage < page.totalPage }">
+							<li class="page-item"><c:url var="url" value="../view/admin.jsp">
+									<c:param name="currentPage" value="${page.endPage+1}" />
+									<c:param name="pageSize" value="${page.pageSize }" />
+									<c:param name="blockSize" value="${page.blockSize }" />
+								</c:url> <a class="page-link" href="${url }">다음</a></li>
+						</c:if>
+					</c:if>
+				</ul>
+			</div>
         </div>
         <footer class="tm-footer row tm-mt-small">
             <div class="col-12 font-weight-light">

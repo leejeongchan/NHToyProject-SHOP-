@@ -12,6 +12,7 @@
 <title>상품조회</title>
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/view.css">
+<link rel="stylesheet" href="../css/newMain.css?ver=1">
 <style>
  div.replyModal { position:relative; z-index:1; display:none; }
  div.modalBackground { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.8); z-index:-1; }
@@ -66,19 +67,10 @@
 </script>
 </head>
 <body>
+	<%@ include file="../include/nav.jsp"%>
 
 	<div id="root">
-		<header id="header">
-			<div id="header_box">
-				<%@ include file="../include/header.jsp"%>
-			</div>
-		</header>
-
-		<nav id="nav">
-			<div id="nav_box">
-				<%@ include file="../include/nav.jsp"%>
-			</div>
-		</nav>
+		
 
 		<section id="container">
 			<div id="container_box">
@@ -218,7 +210,7 @@
 
 						<c:if test="${user == null }">
 							<p>
-								소감을 남기시려면 <a href="login.jsp">로그인</a>해주세요
+								소감을 남기시려면 <a href="../view/login.jsp">로그인</a>해주세요
 							</p>
 						</c:if>
 
@@ -375,14 +367,12 @@
 			</div>
 		</section>
 
-		<footer id="footer">
-			<div id="footer_box">
-				<%@ include file="../include/footer.jsp"%>
-			</div>
-		</footer>
+	
+	
 
 	</div>
-
+	<%@ include file="../include/footer.jsp"%>
+	
 <!-- 댓글 수정 모달창 -->
 <div class="replyModal">
 
@@ -406,6 +396,39 @@
 $(".modal_cancel").click(function(){
  	//$(".replyModal").attr("style", "display:none;");
  	$(".replyModal").fadeOut(200);
+});
+$(document).on('scroll', function() {
+
+	if ($(this).scrollTop() > 1) {
+		$('header').addClass('stivky');
+	}
+
+	else {
+		$('header').removeClass('stivky');
+	}
+});
+
+/*top botton Scroll to top animatioon change JQuery code below*/
+
+$(document).on('click', '#scrollToTop', function() {
+	$('html,body').animate({
+		scrollTop : 0
+	}, 500);
+	return false;
+});
+
+/*top botton show/hide animatioon change JQuery code below*/
+
+$(document).scroll(function(e) {
+	var scrollpos = $(this).scrollTop();
+
+	if (scrollpos < 500) {
+		$('#scrollToTop').addClass('hide');
+	} else {
+		$('#scrollToTop').removeClass('hide');
+
+	}
+
 });
 </script>
 </body>

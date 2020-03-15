@@ -33,4 +33,10 @@ public class GraphService {
 	public HashMap<Integer,Integer> getCurrentStock() throws Exception{
 		return GraphDao.getInstance().getCurrentStock();
 	}
+	/*
+	 * 판매량 출력
+	 */
+	public HashMap<Integer,Integer> getSellAmountStock() throws Exception{
+		return GraphDao.getInstance().getSellAmountStock();
+	}
 }

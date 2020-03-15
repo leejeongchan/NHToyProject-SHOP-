@@ -116,7 +116,7 @@ public class GoodsDao {
 		ResultSet rs = null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("select * from goods order by gdsHit desc limit 0,5");
+			pstmt = conn.prepareStatement("select * from goods order by gdsHit desc limit 0,3");
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				list = new ArrayList<>();

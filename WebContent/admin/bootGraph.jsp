@@ -22,10 +22,36 @@
 <!-- https://getbootstrap.com/ -->
 <link rel="stylesheet" href="../css/templatemo-style.css">
 <script src="../js/jquery-3.3.1.min.js"></script>
+<style>
+#loading {
+ width: 100%;  
+ height: 100%;  
+ top: 0px;
+ left: 0px;
+ position: fixed;  
+ display: block;  
+ opacity: 0.7;  
+ background-color: #fff;  
+ z-index: 99;  
+ text-align: center; } 
+  
+#loading-image {  
+ position: absolute;  
+ top: 50%;  
+ left: 50%; 
+ z-index: 100; }
 
+
+</style>
 </head>
-
+<script type="text/javascript">
+$(document).ready(function() {     
+     $('#loading').hide();   
+    }); 
+</script>
 <body>
+<div id="loading"><img id="loading-image" src="../img/ajax-loader.gif" alt="Loading..." /></div>
+
 	<nav class="navbar navbar-expand-xl">
 		<div class="container h-100">
 			<a class="navbar-brand" href="../view/admin.jsp">
@@ -132,6 +158,30 @@
 							chart2.getView3D().setEnabled(true);
 							chart2.renderControl();
 							
+							//3.상품 별 판매량 피라미드 그래프
+							HashMap<Integer,Integer> map3 = graphService.getSellAmountStock();
+							ChartServer chart3 = new ChartServer(pageContext,request,response);
+							chart3.getData().setSeries(1);
+							chart3.getData().setPoints(map3.size());
+							chart3.setGallery(Gallery.PYRAMID);
+							Iterator<Integer> keys3 = map3.keySet().iterator();
+							while (keys3.hasNext()) {
+								Integer key = keys3.next();
+								//여기에 키 값 받아와서 그래프 값 설정
+								chart3.getData().set(0, key, map3.get(key));
+								chart3.getData().getLabels().set(key, graphService.getGoodsName(key));
+								System.out.println(String.format("키: %d, 값:%d", key, map3.get(key)));
+							}
+							chart3.getLegendBox().setVisible(true);
+							chart3.getLegendBox().setFont(new java.awt.Font("휴먼우린체",java.awt.Font.BOLD,7));
+							chart3.setWidth(600);
+							chart3.setHeight(300);
+							chart3.getTitles().add(new TitleDockable("상품별 판매량"));
+							chart3.getTitles().get(0).setFont(new java.awt.Font("휴먼우린체",java.awt.Font.BOLD,10));
+
+							chart3.getAllSeries().getPointLabels().setVisible(true);
+							chart3.getView3D().setEnabled(true);
+							chart3.renderControl();
 		
 						%>
 

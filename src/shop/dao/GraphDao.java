@@ -103,5 +103,38 @@ public class GraphDao {
 		}
 		return map;
 	}
+	//판매량: 고정 재고 - 현재 재고 
+	public HashMap<Integer, Integer> getSellAmountStock() throws SQLException {
+		HashMap<Integer,Integer> map = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ConnectionProvider.getConnection();
+			//현재 재고
+			pstmt = conn.prepareStatement("select g.gdsNum, s.gdsStock-g.gdsStock as 'gdsSell' from `goods` g, `goodsStock` s where g.gdsNum = s.gdsNum");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				map = new HashMap<Integer,Integer>();
+				do {
+					
+					map.put(rs.getInt("gdsNum"), rs.getInt("gdsSell"));
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt!=null) {
+				pstmt.close();
+			}
+			if(rs!=null) {
+				rs.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}
+		}
+		return map;	}
 	
 }

@@ -10,22 +10,19 @@
 <%@ page import="shop.model.PageList"%>
 <%@ include file="bbsInclude.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="user.model.UserVO" %>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>NHSHOP</title>
+<title>Responsive Sticky Navbar</title>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <script src="../js/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="../css/newMain.css?ver=1">
-
+<link rel="stylesheet" href="../css/newMain.css">
 </head>
 <body>
-	
-
 	<!-- 상품 전체 목록 , Top5 가져오기 -->
 	<%
 		GoodsService goodsService = GoodsService.getInstance();
@@ -42,19 +39,18 @@
 			pageContext.setAttribute("flag", 1);
 		}
 	%>
-	<!-- 헤더네비 -->
-	<%@ include file="../include/nav.jsp"%>
 	<!-- 현재 날짜 구하기 -->
 	<jsp:useBean id="now" class="java.util.Date" />
 	<fmt:formatDate value="${now}" pattern="MM/dd/yyyy" var="nowDate" />
 	
-	
+	<!-- 헤더네비 -->
+	<%@ include file="../include/nav.jsp" %>
 	
 	<!-- Top3 -->
 	<c:if test="${flag eq 1 }">
 
 	<section class="section-tours">
-		<h3 >Top3 </h3>
+		<h3>Top3</h3>
 		<div class="row">
 		
 		<c:forEach var="listTop" items="${listTop}">
@@ -458,7 +454,8 @@
 				</c:if>
 	</div>
 	
-	
+	<%@ include file="../include/footer.jsp" %>
+
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/jquery-3.3.1.min.js"></script>
 

@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <title>장바구니</title>
 <link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/newMain.css?ver=1">
+
 <script src="../js/jquery-3.3.1.min.js"></script> 
 
 <style>
@@ -54,19 +56,10 @@ section#content ul li { margin:10px 0; padding:10px 0; border-bottom:1px solid #
 </style>
 </head>
 <body>
+	<%@ include file="../include/nav.jsp"%>
+
 	<div class="root">
-		<header id="header">
-			<div id="header_box">
-				<%@ include file="../include/header.jsp"%>
-			</div>
-		</header>
-
-		<nav id="nav">
-			<div id="nav_box">
-				<%@ include file="../include/nav.jsp"%>
-			</div>
-		</nav>
-
+		
 
 		<section id="container">
 			<div id="container_box">
@@ -209,4 +202,39 @@ section#content ul li { margin:10px 0; padding:10px 0; border-bottom:1px solid #
 		</section>
 	</div>
 </body>
+<script>
+$(document).on('scroll', function() {
+
+	if ($(this).scrollTop() > 1) {
+		$('header').addClass('stivky');
+	}
+
+	else {
+		$('header').removeClass('stivky');
+	}
+});
+
+/*top botton Scroll to top animatioon change JQuery code below*/
+
+$(document).on('click', '#scrollToTop', function() {
+	$('html,body').animate({
+		scrollTop : 0
+	}, 500);
+	return false;
+});
+
+/*top botton show/hide animatioon change JQuery code below*/
+
+$(document).scroll(function(e) {
+	var scrollpos = $(this).scrollTop();
+
+	if (scrollpos < 500) {
+		$('#scrollToTop').addClass('hide');
+	} else {
+		$('#scrollToTop').removeClass('hide');
+
+	}
+
+});
+</script>
 </html>

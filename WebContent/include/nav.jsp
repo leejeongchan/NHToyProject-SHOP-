@@ -1,37 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<!-- Page Content -->
+	<div class="wrapper">
+		<header>
+		
+			<div class="container">
+				<div id="logo" ><a href="../view/main.jsp">NH SHOP</a></div>
 
-<ul>
-<c:if test="${user == null}">
-	<li>
-		<a href="../view/login.jsp"><h3>로그인</h3></a>
-	</li>
-	<li>
-		<a href="../view/join.jsp"><h3>회원가입</h3></a>
-	</li>
-</c:if>
-<c:if test="${user != null}">
+				<nav>
+					<a href="../controller/goodsCategoryController.jsp?cateCode=1">상의</a>
+					<a href="../controller/goodsCategoryController.jsp?cateCode=2">하의</a>
+					<a href="../controller/goodsCategoryController.jsp?cateCode=3">자켓</a>
+					<a href="../controller/goodsCategoryController.jsp?cateCode=4">악세서리</a>
+					<a href="../controller/goodsCategoryController.jsp?cateCode=5">신발</a>
+					<c:if test="${user == null }">
+					<a href="../view/login.jsp">로그인</a>
+					<a href="../view/join.jsp">회원가입</a>
+					</c:if>
+					<c:if test="${user != null }">
+					<a href="../controller/cartListController.jsp">장바구니</a>
+					<a href="../view/orderList.jsp">주문목록</a>
+					<a href="../view/logout.jsp">로그아웃</a>
+				
+					</c:if>
+				</nav>
 
-<c:if test="${user.userAdmin == 1}">
-<li>
-	<h3 style="color:red;">관리자 </h3>	
-</li>	
-</c:if>
+			</div>
+		</header>
 
-	<li>
-		<h3 style="display:inline-block;">${user.userName}</h3>님 환영합니다.
-	</li>
-	<c:if test="${user.userAdmin eq 0 }">
-	<li>
-		<a href="../controller/cartListController.jsp"><h3>장바구니</h3></a>
-	</li>
-	<li>
-		<a href="../view/orderList.jsp"><h3>주문목록</h3></a>
-	</li>
-	</c:if>
-	<li>
-		<a href="../view/logout.jsp"><h3>로그아웃</h3></a>
-	</li>
-</c:if>
+		<a id="scrollToTop" class="hide" href="#"><i
+			class="fa fa-arrow-circle-up"></i></a>
 
-</ul>
+	</div>

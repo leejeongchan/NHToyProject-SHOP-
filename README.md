@@ -13,7 +13,7 @@
 * JavaScript(JQuery)
 
 ### 사용기술
-*Ajax
+* Ajax
 
 ### MVC 패턴
 * Model - View - Controller (이하 MVC) 패턴을 사용  
@@ -26,7 +26,8 @@
 * softwarefx.chartfx80.server
 
 ## 스크린샷
- 
+* 준비 중
+
 ## 좋은 점
 * 검증 기능
 * Ajax로 빠른 이동

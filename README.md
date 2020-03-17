@@ -26,7 +26,7 @@
 * softwarefx.chartfx80.server
 
 ## 스크린샷
-
+![main](./screenshot/main.png)
 
 ## 좋은 점
 * 검증 기능

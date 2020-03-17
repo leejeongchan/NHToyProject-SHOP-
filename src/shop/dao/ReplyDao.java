@@ -58,7 +58,8 @@ public class ReplyDao {
 		ResultSet rs = null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("select * from goodsReply");
+			pstmt = conn.prepareStatement("select * from goodsReply where gdsNum = ?");
+			pstmt.setInt(1, gdsNum);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				list = new ArrayList<>();

@@ -129,6 +129,7 @@ $(document).ready(function() {
 
 							chart1.getAllSeries().getPointLabels().setVisible(true);
 							chart1.getView3D().setEnabled(true);
+							
 							chart1.renderControl();
 							
 							

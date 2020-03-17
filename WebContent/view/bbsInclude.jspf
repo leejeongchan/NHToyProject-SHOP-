@@ -22,7 +22,7 @@
 		;
 	}
 	// 목록개수
-	int pageSize = 4;
+	int pageSize = 3;
 	try{
 		pageSize = Integer.parseInt(request.getParameter("pageSize"));
 	}catch(Exception e){ 

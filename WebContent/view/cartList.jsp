@@ -176,7 +176,7 @@ section#content ul li { margin:10px 0; padding:10px 0; border-bottom:1px solid #
     							$("#checkMe").change(function(){
         						if($("#checkMe").is(":checked")){
             							var confirm_val = confirm("나에게 배송하시겠습니까?");
-            							var orderRec = '${sessionScope.user.userId}';
+            							var orderRec = '${sessionScope.user.userName}';
             							var orderPhon = '${sessionScope.user.userPhNumber}';
             							var userAddress = '${sessionScope.user.userAddress}';
             							

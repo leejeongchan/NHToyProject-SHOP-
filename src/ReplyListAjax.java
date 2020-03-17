@@ -51,7 +51,7 @@ public class ReplyListAjax extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (list.isEmpty())
-			return null;
+			return "1";
 		// [2] 그리고 json 을 담을 객체를 만들어준다.
 		JSONObject jsonObject = new JSONObject();
 		// [3] 객체 내부에 들어갈 json 배열을 만들어준다.

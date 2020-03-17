@@ -20,7 +20,7 @@
 <title>NHSHOP</title>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <script src="../js/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="../css/newMain.css?ver=1">
+<link rel="stylesheet" href="../css/newMain.css">
 
 </head>
 <body>
@@ -233,8 +233,46 @@
 				int gdsNum2 = (int)pageContext.getAttribute("gdsNum");
 				gdsServ.endFlag(gdsNum2,2);
 			%>
-			
-			<div class="tourcard">
+			<div class="col-lg-4 mb-4">
+				<div class="my-flip-container">
+					<div class="my-flip-inner my-flip-right">
+						<div class="my-flip-inner-wrapper">
+						
+							<div class="my-flip-side my-flip-front">
+								<div class="my-flip-image my-flip-image--1">
+									<img src="${pageContext.request.contextPath }/images/${listAll.gdsImg }">
+								</div>
+								<div class="my-flip-details">
+									<h4 class="my-flip-heading">${listAll.gdsName }[출시전 상품]</h4>
+									<div class="my-flip-text">
+										<p>${listAll.gdsDes}</p>
+									</div>
+								</div>
+							</div>
+							<div class="my-flip-side my-flip-back my-flip-back-1">
+								<div class="my-flip-back-inner">
+									<div class="my-flip-price">
+										<h3>${listAll.gdsPrice }</h3>
+									</div>
+									<div class="my-flip-back-text">
+										<ul>
+											<li>출시전</li>
+											<li>출시일:${listAll.gdsStartDate}</li>
+											<li>종료일:${listAll.gdsEndDate}</li>
+											<li>추천수:${listAll.gdsHit }</li>
+											<li>댓글수:${listAll.gdsReplyCnt }</li>
+										</ul>
+									</div>
+									<div class="my-flip-btn-box">
+										<a href="${url }" class="my-flip-btn">View</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%-- <div class="tourcard">
 				<figure>
 					<div class="tourpic">
 						<img width="320" height="180"
@@ -260,7 +298,7 @@
 
 					</div>
 				</figure>
-			</div>
+			</div> --%>
 			</c:if>
 			
 			<!-- 출시 중! -->
@@ -276,7 +314,48 @@
 					int gdsNum0 =  (int)pageContext.getAttribute("gdsNum");
 					gdsServ.endFlag(gdsNum0,0);
 				%>
-				<div class="tourcard">
+				
+			<div class="col-lg-4 mb-4">
+				<div class="my-flip-container">
+					<div class="my-flip-inner my-flip-right">
+						<div class="my-flip-inner-wrapper">
+						
+							<div class="my-flip-side my-flip-front">
+								<div class="my-flip-image my-flip-image--1">
+									<img src="${pageContext.request.contextPath }/images/${listAll.gdsImg }">
+								</div>
+								<div class="my-flip-details">
+									<h4 class="my-flip-heading">${listAll.gdsName }[출시중 상품]</h4>
+									<div class="my-flip-text">
+										<p>${listAll.gdsDes}</p>
+									</div>
+								</div>
+							</div>
+							<div class="my-flip-side my-flip-back my-flip-back-1">
+								<div class="my-flip-back-inner">
+									<div class="my-flip-price">
+										<h3>${listAll.gdsPrice }</h3>
+									</div>
+									<div class="my-flip-back-text">
+										<ul>
+											<li>출시중</li>
+											<li>출시일:${listAll.gdsStartDate}</li>
+											<li>종료일:${listAll.gdsEndDate}</li>
+											<li>추천수:${listAll.gdsHit }</li>
+											<li>댓글수:${listAll.gdsReplyCnt }</li>
+										</ul>
+									</div>
+									<div class="my-flip-btn-box">
+										<a href="${url }" class="my-flip-btn">View</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+				<%-- <div class="tourcard">
 				<figure>
 					<div class="tourpic">
 						<img width="320" height="180"
@@ -302,7 +381,7 @@
 
 					</div>
 				</figure>
-			</div>
+			</div> --%>
 				
 			</c:if>
 			
@@ -319,32 +398,44 @@
 					int gdsNum1 =(int)pageContext.getAttribute("gdsNum");
 					gdsServ.endFlag(gdsNum1,1);
 				%>
-				<div class="tourcard">
-				<figure>
-					<div class="tourpic">
-						<img width="320" height="180"
-							src="${pageContext.request.contextPath }/images/${listAll.gdsImg }">
-
+						<div class="col-lg-4 mb-4">
+				<div class="my-flip-container">
+					<div class="my-flip-inner my-flip-right">
+						<div class="my-flip-inner-wrapper">
+						
+							<div class="my-flip-side my-flip-front">
+								<div class="my-flip-image my-flip-image--1">
+									<img src="${pageContext.request.contextPath }/images/${listAll.gdsImg }">
+								</div>
+								<div class="my-flip-details">
+									<h4 class="my-flip-heading">${listAll.gdsName }[출시종료 상품]</h4>
+									<div class="my-flip-text">
+										<p>${listAll.gdsDes}</p>
+									</div>
+								</div>
+							</div>
+							<div class="my-flip-side my-flip-back my-flip-back-1">
+								<div class="my-flip-back-inner">
+									<div class="my-flip-price">
+										<h3>${listAll.gdsPrice }</h3>
+									</div>
+									<div class="my-flip-back-text">
+										<ul>
+											<li>출시종료</li>
+											<li>출시일:${listAll.gdsStartDate}</li>
+											<li>종료일:${listAll.gdsEndDate}</li>
+											<li>추천수:${listAll.gdsHit }</li>
+											<li>댓글수:${listAll.gdsReplyCnt }</li>
+										</ul>
+									</div>
+									<div class="my-flip-btn-box">
+										<a href="${url }" class="my-flip-btn">View</a>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<figcaption>
-						<h3 class="entry-title">
-							<a href="${url}">${listAll.gdsName }[출시 종료]</a>
-						</h3>
-						<span class="description">${listAll.gdsDes }</span>
-						<span class="tourprice"> 
-							<span class="currency">Won</span>
-							<span class="price">${listAll.gdsPrice }</span> 
-						</span>
-						<span>추천수:${listAll.gdsHit }</span>
-						<span>댓글수:${listAll.gdsReplyCnt }</span>
-					</figcaption>
-					<div class="tourbtn">
-						<a href="${url }" class="btn btn-sm" target="_blank"
-							rel="noreferrer"> <i class="fa fa-whatsapp fa-fw"></i><span>View</span>
-						</a>
-
-					</div>
-				</figure>
+				</div>
 			</div>
 			</c:if>
 			

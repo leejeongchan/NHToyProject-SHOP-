@@ -37,6 +37,7 @@
 			dataType : "json",
 			async : false,
 			success : function(data) {
+			
 				var box = data.vo;
 				var txt = "";
 				for (i in box) {
@@ -60,7 +61,8 @@
 				$("section.replyList ol").html(txt);
 			},
 			error : function() {
-				
+				$("section.replyList ol").html("댓글이 없네요ㅠ. 아무나 등록해주세요~");
+				replyList();
 			}
 		});
 	}
@@ -119,7 +121,7 @@
 
 								<p class="cartStock">
 									<span>구입 수량</span> <input type="number" class="numBox" min="1"
-										max="${goodsVO.gdsStock}" value="1" /> <input type="hidden"
+										max="5" value="1" /> <input type="hidden"
 										value="${goodsVO.gdsStock}" class="gdsStock_hidden" />
 
 								</p>
@@ -339,7 +341,7 @@
 										dataType: "json",
 										async:false,
 										success : function(result){
-											
+											console.log(result);
 											// result의 값에 따라 동작
 											if(result == 1) {
 												replyList();  // 리스트 새로고침

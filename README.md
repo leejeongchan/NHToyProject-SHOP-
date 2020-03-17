@@ -26,7 +26,7 @@
 * softwarefx.chartfx80.server
 
 ## 스크린샷
-* 준비 중
+
 
 ## 좋은 점
 * 검증 기능

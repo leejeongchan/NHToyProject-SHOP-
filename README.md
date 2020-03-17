@@ -26,7 +26,21 @@
 * softwarefx.chartfx80.server
 
 ## 스크린샷
+* 관리자
+![admin](./screenshot/admin.PNG)
+![admin2](./screenshot/admin2.PNG)
+![goodswrite](./screenshot/goodswrite.PNG)
+![memberadmin](./screenshot/memberadmin.PNG)
+![orderadmin](./screenshot/orderadmin.PNG)
+![graphloading](./screenshot/graphloading.PNG)
+![graph](./screenshot/graph.PNG)
+* 
 ![main](./screenshot/main.PNG)
+![login](./screenshot/login.PNG)
+![join](./screenshot/join.PNG)
+![cart](./screenshot/cart.PNG)
+![goodsView](./screenshot/goodsView.PNG)
+![order](./screenshot/order.PNG)
 
 ## 좋은 점
 * 검증 기능
